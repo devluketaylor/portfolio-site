@@ -39,7 +39,7 @@ export default function ContactForm() {
 		<div className="pb-32">
 			<h1 className="mb-4 font-bold text-2xl">Let's get in touch!</h1>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className="flex gap-3">
+				<div className="flex flex-col md:flex-row gap-3">
 					<Input
 						type="text"
 						{...register("name", { required: true })}

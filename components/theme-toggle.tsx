@@ -15,6 +15,7 @@ export const ThemeToggle = () => {
 		if (currentTheme === "dark") {
 			setDarkMode(true);
 		}
+		console.log(theme);
 	}, [currentTheme]);
 
 	const toggleDarkMode = (checked: boolean) => {
