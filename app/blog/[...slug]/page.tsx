@@ -37,8 +37,8 @@ export async function generateMetadata(
 		return {};
 	}
 
-	// const ogSearchParams = new URLSearchParams();
-	// ogSearchParams.set("title", post.title);
+	const ogSearchParams = new URLSearchParams();
+	ogSearchParams.set("title", post.title);
 
 	return {
 		title: post.title,
@@ -49,34 +49,34 @@ export async function generateMetadata(
 			description: post.description,
 			type: "article",
 			url: post.slug,
-			// images: [
-			// 	{
-			// 		url: `/api/og?${ogSearchParams.toString()}`,
-			// 		width: 1200,
-			// 		height: 630,
-			// 		alt: post.title,
-			// 	},
-			// ],
+			images: [
+				{
+					url: `/api/og?${ogSearchParams.toString()}`,
+					width: 1200,
+					height: 630,
+					alt: post.title,
+				},
+			],
 		},
-		// twitter: {
-		// 	card: "summary_large_image",
-		// 	title: post.title,
-		// 	description: post.description,
-		// 	images: [`/api/og?${ogSearchParams.toString()}`],
-		// },
+		twitter: {
+			card: "summary_large_image",
+			title: post.title,
+			description: post.description,
+			images: [`/api/og?${ogSearchParams.toString()}`],
+		},
 	};
 }
 
 export async function generateStaticParams(): Promise<
 	PostPageProps["params"][]
 > {
-	//@ts-expect-error lllla
+	//@ts-expect-error next 15 is annoying and im confused
 	return posts.map((post) => ({ slug: post.slugAsParams.split("/") }));
 }
 
 export default async function PostPage(props: PostPageProps) {
 	const params = await props.params;
-	//@ts-expect-error lllla
+	//@ts-expect-error next 15 is annoying and im confused
 	const post = await getPostFromParams(params);
 
 	if (!post || !post.published) {
