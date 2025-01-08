@@ -22,10 +22,10 @@ export default function Hero() {
 
 			<p className="text-sm mt-5">
 				I'm a passionate software engineer dedicated to building
-				innovative technologies that solve real-world problems. I earned
+				innovative technologies that solve real-world problems. I am currently earning
 				my computer science degree from the University of Missouri, and
-				I'm driven by a love for learning and creating. I'm excited to
-				collaborate on impactful projects and continue growing in the
+				I am driven by a love for learning and creating. I'm excited to
+				collaborate on projects and continue growing in the
 				tech industry.
 			</p>
 

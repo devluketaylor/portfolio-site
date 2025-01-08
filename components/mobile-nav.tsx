@@ -1,13 +1,13 @@
 import {
 	Sheet,
-	SheetContent,
+	SheetContent, SheetFooter,
 	SheetHeader,
 	SheetTitle,
-	SheetTrigger,
+	SheetTrigger
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { pageLinks } from "@/lib/data";
+import { pageLinks, socialLinks } from "@/lib/data";
 import Link from "next/link";
 import { Page } from "@/lib/types";
 
@@ -21,7 +21,7 @@ const MobileNav = ({ currentPage }: { currentPage: Page }) => {
 			</SheetTrigger>
 			<SheetContent>
 				<SheetHeader>
-					<SheetTitle>LUKE TAYLOR</SheetTitle>
+					<SheetTitle className="text-start mb-12">LUKE TAYLOR</SheetTitle>
 				</SheetHeader>
 				<ul>
 					{pageLinks.map((link) => (
@@ -36,6 +36,18 @@ const MobileNav = ({ currentPage }: { currentPage: Page }) => {
 						</li>
 					))}
 				</ul>
+
+				<SheetFooter>
+				<ul className="mt-8 flex items-center gap-4">
+					{ socialLinks.map((link) => (
+						<li key={link.name}>
+							<Link href={link.href}>
+								<link.icon style={{ width: 20, height: 20 }} />
+							</Link>
+						</li>
+					))}
+				</ul>
+				</SheetFooter>
 			</SheetContent>
 		</Sheet>
 	);
