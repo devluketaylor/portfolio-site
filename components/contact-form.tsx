@@ -29,6 +29,7 @@ export default function ContactForm() {
 			reset();
 			toast("Message sent successfully!");
 		} else {
+			console.log(res)
 			toast("Error submitting form!");
 		}
 
