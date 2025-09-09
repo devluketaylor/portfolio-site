@@ -98,17 +98,19 @@ export default async function PostPage(props: PostPageProps) {
 					</p>
 				) : null}
 
-				<div className="flex items-center gap-3">
+				<div className="flex items-center gap-3 not-prose">
+					<div className="w-[60px] h-[60px] relative overflow-hidden">
 					<Image
 						src={LukeImage}
+						fill
+						objectFit="cover"
 						className="rounded-xl outline outline-accent"
-						alt="luke-taylor"
-						width={60}
-						height={60}
+						alt={siteConfig.name}
 					/>
+					</div>
 
 					<div className="">
-						<p className="my-0 font-semibold">Luke Taylor</p>
+						<p className="my-0 font-semibold">{siteConfig.name}</p>
 						<div className="text-sm sm:text-base font-medium flex items-center gap-2">
 							<IoIosTime className="h-4 w-4 fill-muted-foreground" />
 							<time
@@ -120,7 +122,7 @@ export default async function PostPage(props: PostPageProps) {
 						</div>
 					</div>
 				</div>
-				<div className="flex items-center gap-1">
+				<div className="flex items-center gap-1 mt-5">
 					{renderTags(post.tags)}
 				</div>
 				<Separator className="my-4" />

@@ -8,20 +8,22 @@ import { socialLinks } from "@/lib/data";
 export default function Hero() {
 	return (
 		<section className="pb-12">
+			<div className="w-[130px] h-[130px] relative overlow-hidden">
 			<Image
+				objectFit="cover"
+				fill
 				src={Luke}
 				alt={siteConfig.name}
-				width={120}
-				height={120}
 				className="rounded-3xl outline outline-4 outline-black/5 dark:outline-white/5"
 			/>
+			</div>
 			<h1 className="text-4xl mt-8 font-bold uppercase">
 				{siteConfig.name}
 			</h1>
 			<h2 className="text-lg font-light">Software Engineer</h2>
 
 			<p className="text-sm mt-5">
-				I'm a passionate software engineer dedicated to building
+				I'm a software engineer dedicated to building
 				innovative technologies that solve real-world problems. I am currently earning
 				my computer science degree from the University of Missouri, and
 				I am driven by a love for learning and creating. I'm excited to
