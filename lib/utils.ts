@@ -2,7 +2,6 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { EmailData } from "@/lib/types";
 import { Resend } from "resend";
-import { Post } from "#site/content";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -34,10 +33,10 @@ export const formatDate = (input: string | number): string => {
 	});
 };
 
-export const sortPosts = (posts: Array<Post>) => {
-	return posts.sort((a, b) => {
-		if (a.date > b.date) return -1;
-		if (a.date < b.date) return 1;
+export const sortPosts = <T extends { publishedAt: string }>(posts: Array<T>): Array<T> => {
+	return [...posts].sort((a, b) => {
+		if (a.publishedAt > b.publishedAt) return -1;
+		if (a.publishedAt < b.publishedAt) return 1;
 		return 0;
 	});
 };

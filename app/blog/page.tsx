@@ -1,4 +1,4 @@
-import { posts } from "#site/content";
+import { fetchPosts } from "@/lib/portfolio-api";
 import { PostItem } from "@/components/post-item";
 import { sortPosts } from "@/lib/utils";
 import Navbar from "@/components/navbar";
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 export default async function BlogPage(props: BlogPageProps) {
 	const searchParams = await props.searchParams;
-	const sortedPosts = sortPosts(posts.filter((post) => post.published));
+	const sortedPosts = sortPosts(await fetchPosts());
 	const currentPage = Number(searchParams?.page) || 1;
 	const totalPages = Math.ceil(sortedPosts.length / POST_PER_PAGE);
 
@@ -37,21 +37,17 @@ export default async function BlogPage(props: BlogPageProps) {
 			<div className="container max-w-4xl py-6 lg:py-10">
 				{displayPosts?.length > 0 ? (
 					<ul className="flex flex-col gap-5">
-						{displayPosts.map((post) => {
-							const { slug, date, title, description, tags } =
-								post;
-							return (
-								<li key={slug}>
-									<PostItem
-										tags={tags}
-										slug={slug}
-										title={title}
-										date={date}
-										description={description}
-									/>
-								</li>
-							);
-						})}
+						{displayPosts.map((post) => (
+							<li key={post.slug}>
+								<PostItem
+									tags={post.tags}
+									slug={`/blog/${post.slug}`}
+									title={post.title}
+									date={post.publishedAt}
+									description={post.description ?? undefined}
+								/>
+							</li>
+						))}
 					</ul>
 				) : (
 					<p>Nothing to see here yet.</p>

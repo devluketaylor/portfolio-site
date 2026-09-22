@@ -2,16 +2,17 @@
 
 import { MetadataRoute } from "next";
 
-import { posts } from "#site/content";
+import { fetchPosts } from "@/lib/portfolio-api";
 import { siteConfig } from "@/config/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+	const posts = await fetchPosts();
 	const sitemapPost: MetadataRoute.Sitemap = posts.map((post) => {
 		return {
-			url: `${siteConfig.url}/blog/${post.slugAsParams}`,
+			url: `${siteConfig.url}/blog/${post.slug}`,
 			priority: 1.0,
 			changeFrequency: "daily",
-			lastModified: post.date,
+			lastModified: post.updatedAt,
 		};
 	});
 

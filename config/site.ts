@@ -2,7 +2,7 @@ export const siteConfig = {
 	name: "Luke Taylor",
 	url: "https://luketaylor.io",
 	description:
-		"I'm Luke Taylor, a full-stack developer. I build websites, web apps, and mobile apps.",
+		"I'm Luke Taylor, a computer science student at the University of Missouri. I build web apps and write about what I learn.",
 	author: "Luke Taylor",
 	links: {
 		twitter: "",

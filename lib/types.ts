@@ -20,5 +20,7 @@ export enum Page {
     Home,
     Contact,
     Blog,
+    Projects,
+    About,
     None
 }

@@ -1,7 +1,6 @@
-import { posts } from "#site/content";
+import { fetchPost, fetchPosts } from "@/lib/portfolio-api";
 import { notFound } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
-import { MDXContent } from "@/components/mdx-components";
 import Navbar from "@/components/navbar";
 import { Page } from "@/lib/types";
 import Footer from "@/components/footer";
@@ -22,31 +21,32 @@ interface PostPageProps {
 	}>;
 }
 
-async function getPostFromParams(params: PostPageProps["params"]) {
-	const slug = (await params).slug.join("/");
-	return posts.find((post) => post.slugAsParams === slug);
+async function getPostFromParams(params: Awaited<PostPageProps["params"]>) {
+	const slug = params.slug.join("/");
+	return fetchPost(slug);
 }
 
 export async function generateMetadata(
 	props: PostPageProps,
 ): Promise<Metadata> {
-	const params = props.params;
+	const params = await props.params;
 	const post = await getPostFromParams(params);
 
 	if (!post) {
 		return {};
 	}
 
+	const description = post.description ?? undefined;
 	const ogSearchParams = new URLSearchParams();
 	ogSearchParams.set("title", post.title);
 
 	return {
 		title: post.title,
-		description: post.description,
+		description,
 		authors: { name: siteConfig.author },
 		openGraph: {
 			title: post.title,
-			description: post.description,
+			description,
 			type: "article",
 			url: post.slug,
 			images: [
@@ -61,25 +61,22 @@ export async function generateMetadata(
 		twitter: {
 			card: "summary_large_image",
 			title: post.title,
-			description: post.description,
+			description,
 			images: [`/api/og?${ogSearchParams.toString()}`],
 		},
 	};
 }
 
-export async function generateStaticParams(): Promise<
-	PostPageProps["params"][]
-> {
-	//@ts-expect-error next 15 is annoying and im confused
-	return posts.map((post) => ({ slug: post.slugAsParams.split("/") }));
+export async function generateStaticParams() {
+	const posts = await fetchPosts();
+	return posts.map((post) => ({ slug: [post.slug] }));
 }
 
 export default async function PostPage(props: PostPageProps) {
 	const params = await props.params;
-	//@ts-expect-error next 15 is annoying and im confused
 	const post = await getPostFromParams(params);
 
-	if (!post || !post.published) {
+	if (!post) {
 		return notFound();
 	}
 
@@ -114,10 +111,10 @@ export default async function PostPage(props: PostPageProps) {
 						<div className="text-sm sm:text-base font-medium flex items-center gap-2">
 							<IoIosTime className="h-4 w-4 fill-muted-foreground" />
 							<time
-								dateTime={post.date}
+								dateTime={post.publishedAt}
 								className="text-muted-foreground text-sm"
 							>
-								{formatDate(post.date)}
+								{formatDate(post.publishedAt)}
 							</time>
 						</div>
 					</div>
@@ -127,7 +124,7 @@ export default async function PostPage(props: PostPageProps) {
 				</div>
 				<Separator className="my-4" />
 
-				<MDXContent code={post.body} />
+				<div dangerouslySetInnerHTML={{ __html: post.body }} />
 			</article>
 			<Footer currentPage={Page.Blog} />
 		</div>
